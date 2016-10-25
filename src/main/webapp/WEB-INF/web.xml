@@ -65,7 +65,7 @@
         <filter-class>ru.itis.kpfu.filter.UserAuthFilter</filter-class>
         <init-param>
             <param-name>avoid-urls</param-name>
-            <param-value>/css,/js,/login,/about</param-value>
+            <param-value>/css,/js,/login</param-value>
         </init-param>
     </filter>
     <filter-mapping>

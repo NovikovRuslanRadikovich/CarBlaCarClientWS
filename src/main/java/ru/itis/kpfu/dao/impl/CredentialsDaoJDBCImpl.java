@@ -1,6 +1,7 @@
-package ru.itis.kpfu.dao;
+package ru.itis.kpfu.dao.impl;
 
-import ru.itis.kpfu.dao.factory.ConnectionFactory;
+import ru.itis.kpfu.dao.CredentialsDao;
+import ru.itis.kpfu.dao.factory.JDBCConnectionFactory;
 import ru.itis.kpfu.model.Credentials;
 
 import java.sql.Connection;
@@ -11,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CredentialsDaoImpl implements CredentialsDao{
+public class CredentialsDaoJDBCImpl implements CredentialsDao {
 
     Connection con = null;
     PreparedStatement ptmt = null;
     ResultSet rs = null;
 
     private Connection getConnection() throws SQLException {
-        return ConnectionFactory.getInstance().getConnection();
+        return JDBCConnectionFactory.getInstance().getConnection();
     }
 
     public void add(Credentials credentials) {

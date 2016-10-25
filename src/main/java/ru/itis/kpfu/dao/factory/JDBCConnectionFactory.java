@@ -4,15 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
+public class JDBCConnectionFactory {
     private final String driverClassName = "org.postgresql.Driver";
     private final String connectionUrl = "jdbc:postgresql://localhost:5432/logindb";
     private final String dbUser = "practice";
     private final String dbPwd = "123";
 
-    private static ConnectionFactory connectionFactory = null;
+    private static JDBCConnectionFactory connectionFactory = null;
 
-    private ConnectionFactory() {
+    private JDBCConnectionFactory() {
         try {
             Class.forName(driverClassName);
         } catch (ClassNotFoundException e) {
@@ -26,9 +26,9 @@ public class ConnectionFactory {
         return conn;
     }
 
-    public static ConnectionFactory getInstance() {
+    public static JDBCConnectionFactory getInstance() {
         if (connectionFactory == null) {
-            connectionFactory = new ConnectionFactory();
+            connectionFactory = new JDBCConnectionFactory();
         }
         return connectionFactory;
     }
