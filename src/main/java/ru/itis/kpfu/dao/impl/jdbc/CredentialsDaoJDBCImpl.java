@@ -1,4 +1,4 @@
-package ru.itis.kpfu.dao.impl;
+package ru.itis.kpfu.dao.impl.jdbc;
 
 import ru.itis.kpfu.dao.CredentialsDao;
 import ru.itis.kpfu.dao.factory.JDBCConnectionFactory;
