@@ -1,7 +1,6 @@
 package ru.itis.kpfu.dao.factory;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 import java.io.File;
