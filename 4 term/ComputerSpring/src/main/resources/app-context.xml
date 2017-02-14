@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="lenovoYoga"
+          class="ru.kpfu.itis.spring.interfaces.impl.computer.LenovoYoga">
+        <constructor-arg ref="intelCPU"/>
+        <constructor-arg ref="kingstonMemory"/>
+        <constructor-arg ref="wdHardDrive"/>
+
+        <!--<property name="cpu" ref="intelCPU"/>-->
+        <!--<property name="memory" ref="kingstonMemory"/>-->
+        <!--<property name="hardDrive" ref="wdHardDrive"/>-->
+    </bean>
+
+    <bean id="intelCPU" class="ru.kpfu.itis.spring.interfaces.impl.cpu.IntelCPU" />
+    <bean id="wdHardDrive" class="ru.kpfu.itis.spring.interfaces.impl.harddrive.WDHardDrive" />
+    <bean id="kingstonMemory" class="ru.kpfu.itis.spring.interfaces.impl.memory.KingstonMemory" />
+</beans>
