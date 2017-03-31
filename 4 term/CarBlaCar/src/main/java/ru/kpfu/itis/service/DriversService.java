@@ -1,5 +1,6 @@
 package ru.kpfu.itis.service;
 
+import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.Driver;
 
 import java.util.List;

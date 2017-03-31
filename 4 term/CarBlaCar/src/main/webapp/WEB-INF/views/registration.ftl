@@ -105,6 +105,13 @@
             </div>
         </div>
 
+        <#if errors??>
+            <#list errors as error>
+                <div class="alert alert-danger">
+                    <strong>${error.defaultMessage}</strong>
+                </div>
+            </#list>
+        </#if>
 
     </form>
 

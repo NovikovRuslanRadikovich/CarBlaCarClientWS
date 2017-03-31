@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "drivers", schema = "public", catalog = "carcarbla")
+@Table(name = "drivers")
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "driver_id_generator")

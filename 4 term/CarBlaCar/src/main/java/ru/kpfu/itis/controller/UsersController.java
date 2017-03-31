@@ -3,6 +3,7 @@ package ru.kpfu.itis.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.forms.UserForm;
 import ru.kpfu.itis.model.*;
@@ -11,13 +12,13 @@ import ru.kpfu.itis.service.DriversService;
 import ru.kpfu.itis.service.PassengersService;
 import ru.kpfu.itis.service.UsersService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 
 @Controller
@@ -47,10 +48,27 @@ public class UsersController {
         return "login";
     }
 
-    /*
-    TODO: обработать форму авторизации. Использовать метод findByNickname у userService.
-    При авторизации нужно положить session_uid в сессию, для маяка, что пользователь уже авторизован
-     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@ModelAttribute("user") UserForm userForm, BindingResult bindingResult, ModelMap modelMap) {
+
+        User user = usersService.findByNickname(userForm.getNickname());
+        //если пользователя нет в базе
+        if(user == null)
+            return "redirect:/login";
+
+        String hex = DigestUtils.md5Hex(userForm.getPassword());
+        if(hex.equals(user.getPassword()))
+        {
+            request.getSession().setAttribute("session_uid", user.getId());
+            modelMap.addAttribute("userinfo", user);
+            //TODO: добавить в модель информацию
+            // о количестве поездок за последний месяц (endPasTrips)
+            return "profile";
+        }
+
+        return "home";
+    }
+
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationGet(ModelMap modelMap) {
@@ -63,12 +81,31 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registrationPost(@ModelAttribute("user") UserForm regForm) throws IOException {
+    public String registrationPost(@ModelAttribute("user") @Valid UserForm regForm,
+                                   BindingResult bindingResult,
+                                   ModelMap modelMap){
 
-        /*TODO: сохранить пользователя в бд.
-        По дефолту, новый пользователь является пассажиром.
-            пароль должен храниться в зашифрованном виде.
-         */
+        if(bindingResult.hasErrors()){
+            modelMap.addAttribute("errors", bindingResult.getAllErrors());
+            return "registration";
+        }
+
+        User user = new User();
+        user.setNickname(regForm.getNickname());
+        user.setFirstname(regForm.getFirstname());
+        user.setSurname(regForm.getSurname());
+        String cryptPassword = DigestUtils.md5Hex(regForm.getPassword());
+        user.setPassword(cryptPassword);
+        user.setEmail(regForm.getEmail());
+        user.setRole(UserRole.USER);
+        user.setAvatar("defaut.png");
+        usersService.addUser(user);
+
+        Passenger passenger = new Passenger();
+        passenger.setUser(user);
+        passenger.setRating(0);
+
+        passengersService.addPassenger(passenger);
 
         return "redirect:/login";
     }
@@ -155,18 +192,12 @@ public class UsersController {
             driver.setExperience(0);
             driversService.addDriver(driver);
             user.setDriver(driver);
-            user.setRole("DRIVER");
+            user.setRole(UserRole.DRIVER);
             usersService.update(user);
         }
         automobile.setDriver(driver);
         autosService.addAuto(automobile);
         return "redirect:/users/" + user.getId();
-    }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
-        request.getSession().removeAttribute("session_uid");
-        return "redirect:/";
     }
 }
 

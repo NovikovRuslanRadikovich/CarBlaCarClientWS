@@ -3,7 +3,7 @@ package ru.kpfu.itis.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bookings", schema = "public", catalog = "carcarbla")
+@Table(name = "bookings")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_sequence")

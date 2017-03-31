@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "trips", schema = "public", catalog = "carcarbla")
+@Table(name = "trips")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trips_id_sequence")

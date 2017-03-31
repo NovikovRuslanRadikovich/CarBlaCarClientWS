@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "passengers", schema = "public", catalog = "carcarbla")
+@Table(name = "passengers")
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passengers_id_sequence")
@@ -21,7 +21,6 @@ public class Passenger {
     @ManyToMany(mappedBy = "passengers")
     private List<Trip> trips;
     @OneToMany(mappedBy = "passenger")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Booking> bookings;
 
     public Passenger() {

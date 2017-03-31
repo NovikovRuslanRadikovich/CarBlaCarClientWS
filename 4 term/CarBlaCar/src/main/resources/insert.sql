@@ -1,25 +1,25 @@
 delete from drivers;
 delete from users;
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (1, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (1, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (2, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (2, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (3, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (3, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (4, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (4, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (5, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (5, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (6, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (6, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (7, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (7, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (8, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (8, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (9, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (9, 'default.png', 'nash@gmail.com', 'John', 'Nash', 'jonny',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 insert into users(id, avatar, email, firstname, surname, nickname, password, role)
-values (10, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 'USER');
+values (10, 'default.png', 'turing@gmail.com', 'Alan', 'Turing', 'automan',  'd41d8cd98f00b204e9800998ecf8427e', 0);
 
 insert into drivers(id, experience, rating,user_id)
 values (1, 3, 4, 2);

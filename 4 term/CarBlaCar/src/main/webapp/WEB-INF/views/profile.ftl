@@ -49,9 +49,9 @@
                 <#--<div class="row">-->
                     <div class="col-xs-12 col-sm-8">
                         <h2>${userinfo.firstname} ${userinfo.surname}</h2>
-                        <p><strong>Пассажир: </strong> <#if userinfo.passenger?exists>Да<#else>Нет</#if> </p>
-                        <p><strong>Водитель: </strong> <#if userinfo.driver?exists>Да<#else>Нет</#if> </p>
-                    <#if userinfo.driver?exists>
+                        <p><strong>Пассажир: </strong> <#if userinfo.passenger??>Да<#else>Нет</#if> </p>
+                        <p><strong>Водитель: </strong> <#if userinfo.driver??>Да<#else>Нет</#if> </p>
+                    <#if userinfo.driver??>
                         <h4><strong>Автомобили: </strong></h4>
                         <#list userinfo.driver.automobileList as auto>
                             <p>${auto.brand} ${auto.model}</p>
@@ -66,13 +66,13 @@
                              class="center-block img-responsive">
 
                     </div><!--/col-->
-                    <div class="col-xs-12 <#if userinfo.driver?exists>col-sm-6<#else>col-sm-12</#if> "
+                    <div class="col-xs-12 <#if userinfo.driver??>col-sm-6<#else>col-sm-12</#if> "
                          style="background: #c1e2b3">
                         <h3 style="text-align: center">Пассажир</h3>
                         <h4>Рейтинг: <strong> ${userinfo.passenger.rating} </strong></h4>
-                        <h4>Количество поездок: <strong> ${endPasTrips?size} </strong></h4>
+                        <h4>Количество поездок за последний месяц: <strong> ${endPasTrips?size} </strong></h4>
                     <#if user.id == userinfo.id>
-                        <#if userinfo.driver?exists>
+                        <#if userinfo.driver??>
                             <h4 style="text-align: center">
                                 <a href="/newtrip">
                                     <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span>
@@ -93,10 +93,10 @@
                         </#if>
                     </#if>
                     </div>
-                <#if userinfo.driver?exists>
+                <#if userinfo.driver??>
                     <div class="col-xs-12 col-sm-6" style="background: #bce8f1">
                         <h3 style="text-align: center">Водитель </h3>
-                        <#if endDriverTrips?exists>
+                        <#if endDriverTrips??>
                             <h4>Рейтинг: <strong>${userinfo.driver.rating}</strong></h4>
                             <h4>Количество поездок: <strong> ${endDriverTrips?size} </strong></h4>
                         </#if>

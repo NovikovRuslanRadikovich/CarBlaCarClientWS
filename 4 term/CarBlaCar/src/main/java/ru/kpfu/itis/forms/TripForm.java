@@ -4,6 +4,8 @@ public class TripForm {
     private String auto;
     private String departure;
     private String destination;
+    //TODO: реализовать аннотацию, которая проверяет,
+    // что указанная дата не раньше текущего момента временри
     private String date;
     private int price;
     private int count; //количество пассажиров

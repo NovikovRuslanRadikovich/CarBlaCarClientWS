@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "carblacar")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_secuence")
-    @SequenceGenerator(name = "user_id_secuence", sequenceName = "users_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "user_id_secuence", sequenceName = "users_id_seq", allocationSize = 11)
     private Long id;
     private String nickname;
     private String password;
@@ -19,19 +19,18 @@ public class User {
     private String surname;
     private String avatar;
     private String email;
-    private String role;
+    private UserRole role;
     @OneToOne(mappedBy = "user")
     private Driver driver;
     @OneToOne(mappedBy = "user")
     private Passenger passenger;
     @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
     List<Review> reviews;
 
     public User() {
     }
 
-    public User(String nickname, String password, String firstname, String surname, String email, String role, String avatar) {
+    public User(String nickname, String password, String firstname, String surname, String email, UserRole role, String avatar) {
         this.nickname = nickname;
         this.password = password;
         this.firstname = firstname;
@@ -105,11 +104,11 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

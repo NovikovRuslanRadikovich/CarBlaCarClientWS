@@ -1,8 +1,10 @@
 package ru.kpfu.itis.service;
 
+import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.User;
 
 import java.util.List;
+
 
 public interface UsersService {
     User addUser(User user);

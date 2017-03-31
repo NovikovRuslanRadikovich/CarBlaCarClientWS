@@ -1,11 +1,23 @@
 package ru.kpfu.itis.forms;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import ru.kpfu.itis.utils.validation.FieldMatch;
+
+import javax.validation.constraints.Size;
+
+@FieldMatch(first = "password", second = "passwordConfirmation", message = "The password fields must match")
 public class UserForm {
+    @NotEmpty(message = "Поле Никнейм не должно быть пустым")
+    @Size(max = 10, message = "Максимальнвя длина никнейма не более 10 символов")
     private String nickname;
+    @NotEmpty
+    @Size(min = 5, message = "Длина пароля должна составлять не менее 5 символов")
     private String password;
     private String passwordConfirmation;
     private String firstname;
     private String surname;
+    @Email
     private String email;
 
     public UserForm() {

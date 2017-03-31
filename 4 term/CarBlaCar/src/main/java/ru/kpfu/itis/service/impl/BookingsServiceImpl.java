@@ -1,31 +1,33 @@
 package ru.kpfu.itis.service.impl;
 
-import ru.kpfu.itis.dao.BookingsDao;
+import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.kpfu.itis.repository.BookingsRepository;
 import ru.kpfu.itis.service.BookingService;
 
 import java.util.List;
 
+@Service
 public class BookingsServiceImpl implements BookingService {
 
     @Autowired
-    BookingsDao bookingsDao;
+    BookingsRepository bookingsRepository;
 
     public Booking addBooking(Booking booking) {
-        bookingsDao.save(booking);
+        bookingsRepository.save(booking);
         return booking;
     }
 
     public void update(Booking booking) {
-        bookingsDao.save(booking);
+        bookingsRepository.save(booking);
     }
 
     public List<Booking> findAll() {
-        return bookingsDao.findAll();
+        return bookingsRepository.findAll();
     }
 
     public Booking findById(Long id) {
-        return bookingsDao.findOne(id);
+        return bookingsRepository.findOne(id);
     }
 }
