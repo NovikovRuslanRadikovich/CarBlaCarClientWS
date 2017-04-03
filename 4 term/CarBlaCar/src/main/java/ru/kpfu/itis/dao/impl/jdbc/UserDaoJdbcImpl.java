@@ -25,7 +25,6 @@ public class UserDaoJdbcImpl implements UsersDao{
     }
     @Override
     public void save(User user) {
-       //TODO: реализовать метод
     }
 
     @Override
@@ -50,7 +49,6 @@ public class UserDaoJdbcImpl implements UsersDao{
 
     @Override
     public User findByNicknameIgnoreCase(String name) {
-        //TODO: реализовать метод
         return null;
     }
 

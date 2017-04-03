@@ -51,14 +51,14 @@
 
     <hr>
 
-    <form action="/newtrip" method="POST">
+    <form name="trip" action="/newtrip" method="POST">
         <div class="form-group row">
             <label for="auto" class="col-sm-2 col-form-label">Автомобиль</label>
             <div class="col-sm-10">
                 <select class="form-control select2" style="width: 100%;" name="auto">
                     <option selected="selected"></option>
                 <#list automobileList as auto>
-                    <option>${auto.id} - ${auto.brand} ${auto.model} </option>
+                    <option value="${auto.id}">${auto.brand} ${auto.model} </option>
                 </#list>
                 </select>
             </div>
@@ -78,15 +78,15 @@
             <#--<@form.errors path="email"></@form.errors>-->
             </div>
         </div>
-        <div class="form-group row">
-            <label for="date" class="col-sm-2 col-form-label">Дата</label>
-            <div class=' col-sm-10 input-group date' id='datetimepicker2'>
-                <input name="date" type='text' class="form-control"/>
+            <div class="form-group row">
+                <label for="date" class="col-sm-2 col-form-label">Дата</label>
+                <div class=' col-sm-10 input-group date' id='datetimepicker2'>
+                    <input name="date" type='text' class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
+                </div>
             </div>
-        </div>
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker2').datetimepicker({
@@ -122,6 +122,14 @@
                 <button type="submit" class="btn btn-primary">Предложить поездку</button>
             </div>
         </div>
+
+    <#if errors??>
+        <#list errors as error>
+            <div class="alert alert-danger">
+                <strong>${error.defaultMessage}</strong>
+            </div>
+        </#list>
+    </#if>
 
 
     </form>

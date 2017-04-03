@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.forms.UserForm;
 import ru.kpfu.itis.model.*;
@@ -61,12 +62,16 @@ public class UsersController {
         {
             request.getSession().setAttribute("session_uid", user.getId());
             modelMap.addAttribute("userinfo", user);
+            modelMap.addAttribute("user", user);
             //TODO: добавить в модель информацию
             // о количестве поездок за последний месяц (endPasTrips)
-            return "profile";
+            return "redirect:/users/" + user.getId();
+        } else {
+            modelMap.addAttribute("errors",
+                    new ObjectError("password","Неверный пароль"));
         }
 
-        return "home";
+        return "login";
     }
 
 
@@ -119,6 +124,7 @@ public class UsersController {
         }
         User userInfo = usersService.findById(userId);
         modelMap.put("userinfo", userInfo);
+        modelMap.put("user", userInfo);
         if (userInfo.getDriver() != null && userInfo.getDriver().getTrips().size() > 0) {
             List<Trip> tripList = userInfo.getDriver().getTrips();
             List<Trip> driverTrips = new ArrayList<>();
@@ -198,6 +204,12 @@ public class UsersController {
         automobile.setDriver(driver);
         autosService.addAuto(automobile);
         return "redirect:/users/" + user.getId();
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(){
+        request.getSession().setAttribute("session_uid", null);
+        return "redirect:/";
     }
 }
 

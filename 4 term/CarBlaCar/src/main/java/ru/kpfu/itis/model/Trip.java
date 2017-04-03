@@ -1,5 +1,10 @@
 package ru.kpfu.itis.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.kpfu.itis.forms.TripForm;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +36,16 @@ public class Trip {
     private String status;
     private String info; //информация и доп. условия
     @OneToMany(mappedBy = "trip")
+    @LazyCollection(LazyCollectionOption.FALSE)
     List<Booking> bookings;
     @OneToMany(mappedBy = "trip")
     List<Review> reviews;
 
     public Trip() {
+    }
 
+    public Trip(TripForm tripForm){
+//        this.auto = tripForm.getAuto();
     }
 
     public Trip(Driver driver, Automobile auto, String departure, String destination, Date date, int price, int count, String status, String info) {

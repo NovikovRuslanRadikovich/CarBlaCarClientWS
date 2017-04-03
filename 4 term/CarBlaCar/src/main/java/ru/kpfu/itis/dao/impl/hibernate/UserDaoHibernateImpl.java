@@ -51,7 +51,6 @@ public class UserDaoHibernateImpl implements UsersDao {
 
     @Override
     public User findByNicknameIgnoreCase(String name) {
-        //TODO: реализовать метод
         return null;
     }
 

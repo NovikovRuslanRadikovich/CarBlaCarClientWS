@@ -1,20 +1,26 @@
 package ru.kpfu.itis.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import ru.kpfu.itis.controller.editor.AutomobileEditor;
 import ru.kpfu.itis.forms.TripForm;
 import ru.kpfu.itis.model.*;
 import ru.kpfu.itis.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 @Controller
@@ -41,9 +47,17 @@ public class TripsController {
     @Autowired
     UsersService usersService;
 
-
     @Autowired
     private HttpServletRequest request;
+
+    @InitBinder
+    public final void initBinderTripFormValidator(final WebDataBinder binder, final Locale locale) {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", locale);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+
+        binder.registerCustomEditor(Automobile.class, new AutomobileEditor());
+    }
+
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.GET)
     public String newTripPage(ModelMap modelMap, Principal principal) {
@@ -58,28 +72,24 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.POST)
-    public String newTrip(@ModelAttribute TripForm tripForm, Principal principal) {
+    public String newTrip(@ModelAttribute("trip") @Valid TripForm tripForm, BindingResult bindingResult, ModelMap modelMap) {
         Long userId = (Long) request.getSession().getAttribute("session_uid");
         if(userId == null) {
             return "login";
         }
-        User userInfo = usersService.findById(userId);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        Date date = null;
-        try {
-            date = formatter.parse(tripForm.getDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        if(bindingResult.hasErrors()){
+            modelMap.addAttribute("errors", bindingResult.getAllErrors());
+            return "newtrip";
         }
-        String autoid = tripForm.getAuto().split(" ")[0];
-        Long id = Long.parseLong(autoid);
+        User userInfo = usersService.findById(userId);
 
         Trip trip = new Trip();
         trip.setDriver(userInfo.getDriver());
-        trip.setAuto(autosService.findById(id));
+        trip.setAuto(tripForm.getAuto());
         trip.setDeparture(tripForm.getDeparture());
         trip.setDestination(tripForm.getDestination());
-        trip.setDate(date);
+        trip.setDate(tripForm.getDate());
         trip.setPrice(tripForm.getPrice());
         trip.setCount(tripForm.getCount());
         trip.setStatus("Ожидание");

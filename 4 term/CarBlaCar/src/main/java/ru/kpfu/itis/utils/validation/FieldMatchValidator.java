@@ -4,7 +4,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.InvocationTargetException;
 
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object>
 {

@@ -70,7 +70,7 @@
                          style="background: #c1e2b3">
                         <h3 style="text-align: center">Пассажир</h3>
                         <h4>Рейтинг: <strong> ${userinfo.passenger.rating} </strong></h4>
-                        <h4>Количество поездок за последний месяц: <strong> ${endPasTrips?size} </strong></h4>
+                        <#--<h4>Количество поездок за последний месяц: <strong> ${endPasTrips?size} </strong></h4>-->
                     <#if user.id == userinfo.id>
                         <#if userinfo.driver??>
                             <h4 style="text-align: center">

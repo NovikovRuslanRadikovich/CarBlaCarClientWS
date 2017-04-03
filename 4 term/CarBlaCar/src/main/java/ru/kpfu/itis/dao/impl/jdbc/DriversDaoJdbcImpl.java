@@ -23,7 +23,6 @@ public class DriversDaoJdbcImpl implements DriversDao {
 
     @Override
     public List<Driver> findTop9ByOrderByRatingDesc() {
-        //TODO: реализовать метод
         return null;
     }
 }

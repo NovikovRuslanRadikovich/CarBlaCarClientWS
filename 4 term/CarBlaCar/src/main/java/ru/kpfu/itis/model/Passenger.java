@@ -19,6 +19,7 @@ public class Passenger {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @ManyToMany(mappedBy = "passengers")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Trip> trips;
     @OneToMany(mappedBy = "passenger")
     private List<Booking> bookings;
