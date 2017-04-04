@@ -44,6 +44,12 @@
 
     <hr>
 
+    <#if info??>
+        <div class="alert alert-danger">
+            <strong>${info}</strong>
+        </div>
+    </#if>
+
     <form action="/newauto" method="POST">
         <div class="form-group row">
             <label for="nickname" class="col-sm-2 col-form-label">Марка</label>

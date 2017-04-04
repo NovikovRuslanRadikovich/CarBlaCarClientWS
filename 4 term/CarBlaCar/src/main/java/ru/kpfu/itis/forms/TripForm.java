@@ -8,7 +8,6 @@ import javax.validation.constraints.Future;
 import java.util.Date;
 
 public class TripForm {
-    @NotEmpty(message = "Нужно выбрать автомобиль")
     private Automobile auto;
     @NotEmpty(message = "Нужно указать место отправления")
     private String departure;

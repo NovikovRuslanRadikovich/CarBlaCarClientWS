@@ -225,6 +225,21 @@
                     </#if>
                 </#if>
 
+                    <#--LAST TRIPS FOR MONTH-->
+                <#if lastTrips?has_content>
+                    <div class="col-xs-12 col-sm-12">
+                        <hr/>
+                        <h3 style="text-align: center">Последние поездки за месяц</h3>
+                    </div>
+
+                        <div class="col-xs-12 col-sm-6" style="background: #c1e2b3">
+
+                            <#list lastTrips as trip>
+                                <h4>${trip.departure} - ${trip.destination} : ${trip.date}</h4>
+                            </#list>
+                        </div><!--/col-->
+                </#if>
+
 
                 </div><!--/row-->
             </div><!--/panel-body-->

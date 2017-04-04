@@ -1,7 +1,8 @@
 package ru.kpfu.itis.service;
 
-import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.Trip;
+import ru.kpfu.itis.model.User;
+import ru.kpfu.itis.model.UserRole;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface TripsService {
     Trip findById(Long id);
 
     List<Trip> lastTrips();
+
+    List<Trip> lastEndsTripsForMonth(User user);
+
+
 }

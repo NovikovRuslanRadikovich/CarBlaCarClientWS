@@ -3,11 +3,14 @@ package ru.kpfu.itis.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import ru.kpfu.itis.controller.handler.UserInfoHandler;
 
 @Configuration
 @EnableWebMvc
@@ -38,4 +41,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return freeMarkerConfigurer;
     }
 
+
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new UserInfoHandler());
+    }
 }

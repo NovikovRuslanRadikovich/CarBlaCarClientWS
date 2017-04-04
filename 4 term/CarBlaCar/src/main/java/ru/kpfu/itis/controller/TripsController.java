@@ -2,6 +2,8 @@ package ru.kpfu.itis.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.method.P;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -47,9 +49,6 @@ public class TripsController {
     @Autowired
     UsersService usersService;
 
-    @Autowired
-    private HttpServletRequest request;
-
     @InitBinder
     public final void initBinderTripFormValidator(final WebDataBinder binder, final Locale locale) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", locale);
@@ -61,20 +60,20 @@ public class TripsController {
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.GET)
     public String newTripPage(ModelMap modelMap, Principal principal) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
+        User user = (User) ((Authentication) principal).getPrincipal();
+        if(user.getDriver().getAutomobileList().isEmpty()){
+            modelMap.addAttribute("info", "Перед предложением поездки " +
+                    "необходимо добавить машину");
+            return "redirect:/newauto";
         }
-        User userInfo = usersService.findById(userId);
-        List<Automobile> automobileList = userInfo.getDriver().getAutomobileList();
-        modelMap.put("automobileList", automobileList);
         return "newtrip";
     }
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.POST)
-    public String newTrip(@ModelAttribute("trip") @Valid TripForm tripForm, BindingResult bindingResult, ModelMap modelMap) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
+    public String newTrip(@ModelAttribute("trip") @Valid TripForm tripForm, BindingResult bindingResult,
+                          ModelMap modelMap, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
+        if(user == null) {
             return "login";
         }
 
@@ -82,10 +81,8 @@ public class TripsController {
             modelMap.addAttribute("errors", bindingResult.getAllErrors());
             return "newtrip";
         }
-        User userInfo = usersService.findById(userId);
-
         Trip trip = new Trip();
-        trip.setDriver(userInfo.getDriver());
+        trip.setDriver(user.getDriver());
         trip.setAuto(tripForm.getAuto());
         trip.setDeparture(tripForm.getDeparture());
         trip.setDestination(tripForm.getDestination());
@@ -98,7 +95,7 @@ public class TripsController {
 
         tripsService.addTrip(trip);
 
-        return "redirect:/users/" + userInfo.getId();
+        return "redirect:/users/" + user.getId();
     }
 
     @RequestMapping(value = "/trips/{trip_id:\\d+}", method = RequestMethod.GET)
@@ -109,12 +106,9 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}", method = RequestMethod.POST)
-    public String JoinTrip(@ModelAttribute Booking booking, @PathVariable Long tripId) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
-        User user = usersService.findById(userId);
+    public String JoinTrip(@ModelAttribute Booking booking, @PathVariable Long tripId,
+                           Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
         booking.setTrip(tripsService.findById(tripId));
         booking.setPassenger(user.getPassenger());
         bookingService.addBooking(booking);
@@ -122,11 +116,8 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/bookings/{bookingId:\\d+}/conf", method = RequestMethod.GET)
-    public String confirmBooking(@PathVariable Long bookingId) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
+    public String confirmBooking(@PathVariable Long bookingId, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
         Booking booking = bookingService.findById(bookingId);
         booking.setConfirm("yes");
         Trip trip = booking.getTrip();
@@ -134,19 +125,16 @@ public class TripsController {
         trip.setCount(trip.getCount() - booking.getCount());
         tripsService.update(trip);
         bookingService.update(booking);
-        return "redirect:/users/" + userId;
+        return "redirect:/users/" + user.getId();
     }
 
     @RequestMapping(value = "/bookings/{bookingId:\\d+}/deny", method = RequestMethod.GET)
-    public String denyBooking(@PathVariable Long bookingId) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
+    public String denyBooking(@PathVariable Long bookingId, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
         Booking booking = bookingService.findById(bookingId);
         booking.setConfirm("no");
         bookingService.update(booking);
-        return "redirect:/users/" + userId;
+        return "redirect:/users/" + user.getId();
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}/status", method = RequestMethod.GET)
@@ -157,35 +145,26 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}/status", method = RequestMethod.POST)
-    public String tripStatus(@PathVariable Long tripId, @RequestParam String status) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
+    public String tripStatus(@PathVariable Long tripId, @RequestParam String status, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
         Trip trip = tripsService.findById(tripId);
         trip.setStatus(status);
         tripsService.update(trip);
-        return "redirect:/users/" + userId;
+        return "redirect:/users/" + user.getId();
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}/review", method = RequestMethod.GET)
-    public String tripReviewPage(@PathVariable Long tripId, ModelMap modelMap) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
+    public String tripReviewPage(@PathVariable Long tripId, ModelMap modelMap, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
         Trip trip = tripsService.findById(tripId);
         modelMap.put("trip", trip);
         return "tripreview";
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}/review", method = RequestMethod.POST)
-    public String tripReview(@PathVariable Long tripId, @ModelAttribute Review review) {
-        Long userId = (Long) request.getSession().getAttribute("session_uid");
-        if(userId == null) {
-            return "login";
-        }
-        User user = usersService.findById(userId);
+    public String tripReview(@PathVariable Long tripId, @ModelAttribute Review review, Principal principal) {
+        User user = (User) ((Authentication) principal).getPrincipal();
+
         Trip trip = tripsService.findById(tripId);
         review.setUser(user);
         review.setTrip(trip);

@@ -74,8 +74,6 @@
 
 
     </form>
-
-
     <hr>
 
 <#include "footer.ftl">

@@ -57,7 +57,7 @@
             <div class="col-sm-10">
                 <select class="form-control select2" style="width: 100%;" name="auto">
                     <option selected="selected"></option>
-                <#list automobileList as auto>
+                <#list user.driver.automobileList as auto>
                     <option value="${auto.id}">${auto.brand} ${auto.model} </option>
                 </#list>
                 </select>

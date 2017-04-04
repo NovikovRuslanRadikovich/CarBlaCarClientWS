@@ -14,7 +14,8 @@ public class WebAppInitializer extends
 
 	@Override
     public Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] {DataSourceConfig.class, PersistenceConfig.class, CoreConfig.class};
+		return new Class<?>[] {WebSecurityConfig.class, DataSourceConfig.class,
+                PersistenceConfig.class, CoreConfig.class};
 	}
 
 	@Override
@@ -29,14 +30,14 @@ public class WebAppInitializer extends
 
     @Override
     protected Filter[] getServletFilters() {
-//        DelegatingFilterProxy springSecurityFilterChain = new DelegatingFilterProxy("springSecurityFilterChain");
+        DelegatingFilterProxy springSecurityFilterChain = new DelegatingFilterProxy("springSecurityFilterChain");
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
         return new Filter[]{
-//                springSecurityFilterChain,
+                springSecurityFilterChain,
                 characterEncodingFilter
         };
     }

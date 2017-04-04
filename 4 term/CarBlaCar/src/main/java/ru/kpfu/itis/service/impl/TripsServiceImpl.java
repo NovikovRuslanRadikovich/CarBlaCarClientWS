@@ -1,11 +1,16 @@
 package ru.kpfu.itis.service.impl;
 
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.kpfu.itis.model.User;
+import ru.kpfu.itis.model.UserRole;
+import ru.kpfu.itis.model.specs.TripSpecs;
 import ru.kpfu.itis.repository.TripsRepository;
 import ru.kpfu.itis.service.TripsService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +29,7 @@ public class TripsServiceImpl implements TripsService {
     }
 
     public List<Trip> findAll() {
-        return tripsRepository.findAll();
+        return (List<Trip>) tripsRepository.findAll();
     }
 
     public List<Trip> findAllOrderDate() {
@@ -45,5 +50,11 @@ public class TripsServiceImpl implements TripsService {
 
     public List<Trip> lastTrips() {
         return tripsRepository.findTop10ByOrderByDateDesc();
+    }
+
+    @Override
+    public List<Trip> lastEndsTripsForMonth(User user) {
+        Date currentDate  = new Date();
+        return tripsRepository.findAll(Specifications.where(TripSpecs.checkParams(user, currentDate)));
     }
 }
