@@ -1,9 +1,7 @@
 package ru.kpfu.itis.model.specs;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.access.method.P;
 import ru.kpfu.itis.model.Driver;
-import ru.kpfu.itis.model.Passenger;
 import ru.kpfu.itis.model.Trip;
 import ru.kpfu.itis.model.User;
 import ru.kpfu.itis.utils.DateUtil;
@@ -28,6 +26,9 @@ public class TripSpecs {
                 }
                 if (user.getDriver() != null) {
                     predicates.add(cb.equal(root.<Driver>get("driver"), user.getDriver()));
+                }
+                if(user.getPassenger() != null){
+                    //TODO: добавить predicate на наличие текущего пользователя в качестве пассажира в искомых поездках
                 }
 
                 return cb.and(predicates.toArray(new Predicate[predicates.size()]));

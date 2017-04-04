@@ -63,14 +63,14 @@ public class TripsController {
         User user = (User) ((Authentication) principal).getPrincipal();
         if(user.getDriver().getAutomobileList().isEmpty()){
             modelMap.addAttribute("info", "Перед предложением поездки " +
-                    "необходимо добавить машину");
+                    "необходимо добавить машин");
             return "redirect:/newauto";
         }
         return "newtrip";
     }
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.POST)
-    public String newTrip(@ModelAttribute("trip") @Valid TripForm tripForm, BindingResult bindingResult,
+    public String newTrip(@RequestParam("trip") TripForm tripForm, BindingResult bindingResult,
                           ModelMap modelMap, Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         if(user == null) {

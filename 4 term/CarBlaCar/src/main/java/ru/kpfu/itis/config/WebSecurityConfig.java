@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // по которым будет определятся доступ к ресурсам и остальным данным
                 .authorizeRequests()
                 .antMatchers("/", "/resources/**","/login", "/registration").permitAll()
-                .antMatchers("/newtrip").hasRole("DRIVER")
+//                .antMatchers("/newtrip").hasRole("DRIVER")
                 .anyRequest().permitAll();
         http
                 .formLogin()
@@ -39,9 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .logout()
                 // разрешаем делать логаут всем
-                .permitAll()
-                // делаем не валидной текущую сессию
-                .invalidateHttpSession(true);
+                .permitAll();
                 //В Spring Security 4.x она включена по умолчанию
         http.csrf().disable();
     }
