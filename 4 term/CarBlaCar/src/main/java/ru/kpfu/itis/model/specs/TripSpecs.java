@@ -28,8 +28,8 @@ public class TripSpecs {
                 if(user.getPassenger() != null) {
                     query.distinct(true);
                     Root<Passenger> passengerRoot = query.from(Passenger.class);
-                    Expression<Collection<Trip>> passengerOfTrip = passengerRoot.get("trips");
-                    predicates.add(cb.and(cb.equal(passengerRoot.get("user").get("nickname"), user.getNickname()), cb.isMember(root, passengerOfTrip)));
+                    Expression<Collection<Trip>> tripsOfPassenger = passengerRoot.get("trips");
+                    predicates.add(cb.and(cb.equal(passengerRoot.get("user").get("nickname"), user.getNickname()), cb.isMember(root, tripsOfPassenger)));
 
                 }
                 return cb.and(predicates.toArray(new Predicate[predicates.size()]));
