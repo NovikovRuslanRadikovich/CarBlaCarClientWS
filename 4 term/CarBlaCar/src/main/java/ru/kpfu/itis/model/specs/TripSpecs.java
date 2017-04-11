@@ -2,15 +2,13 @@ package ru.kpfu.itis.model.specs;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.kpfu.itis.model.Driver;
+import ru.kpfu.itis.model.Passenger;
 import ru.kpfu.itis.model.Trip;
 import ru.kpfu.itis.model.User;
 import ru.kpfu.itis.utils.DateUtil;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class TripSpecs {
     public static Specification<Trip> checkParams(final User user, final Date date) {
@@ -27,10 +25,13 @@ public class TripSpecs {
                 if (user.getDriver() != null) {
                     predicates.add(cb.equal(root.<Driver>get("driver"), user.getDriver()));
                 }
-                if(user.getPassenger() != null){
-                    //TODO: добавить predicate на наличие текущего пользователя в качестве пассажира в искомых поездках
-                }
+                if(user.getPassenger() != null) {
+                    query.distinct(true);
+                    Root<Passenger> passengerRoot = query.from(Passenger.class);
+                    Expression<Collection<Trip>> passengerOfTrip = passengerRoot.get("trips");
+                    predicates.add(cb.and(cb.equal(passengerRoot.get("user").get("nickname"), user.getNickname()), cb.isMember(root, passengerOfTrip)));
 
+                }
                 return cb.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         };

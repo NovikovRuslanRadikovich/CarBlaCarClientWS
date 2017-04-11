@@ -70,7 +70,7 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/newtrip", method = RequestMethod.POST)
-    public String newTrip(@RequestParam("trip") TripForm tripForm, BindingResult bindingResult,
+    public String newTrip(@ModelAttribute TripForm tripForm, BindingResult bindingResult,
                           ModelMap modelMap, Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         if(user == null) {
@@ -98,7 +98,7 @@ public class TripsController {
         return "redirect:/users/" + user.getId();
     }
 
-    @RequestMapping(value = "/trips/{trip_id:\\d+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/trips/{tripId:\\d+}", method = RequestMethod.GET)
     public String joinTripPage(ModelMap modelMap, @PathVariable Long tripId) {
         Trip trip = tripsService.findById(tripId);
         modelMap.put("trip", trip);
@@ -106,7 +106,7 @@ public class TripsController {
     }
 
     @RequestMapping(value = "/trips/{tripId:\\d+}", method = RequestMethod.POST)
-    public String JoinTrip(@ModelAttribute Booking booking, @PathVariable Long tripId,
+    public String joinTrip(@ModelAttribute Booking booking, @PathVariable Long tripId,
                            Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         booking.setTrip(tripsService.findById(tripId));
@@ -119,7 +119,7 @@ public class TripsController {
     public String confirmBooking(@PathVariable Long bookingId, Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         Booking booking = bookingService.findById(bookingId);
-        booking.setConfirm("yes");
+        booking.setConfirm(true);
         Trip trip = booking.getTrip();
         trip.getPassengers().add(booking.getPassenger());
         trip.setCount(trip.getCount() - booking.getCount());
@@ -132,7 +132,7 @@ public class TripsController {
     public String denyBooking(@PathVariable Long bookingId, Principal principal) {
         User user = (User) ((Authentication) principal).getPrincipal();
         Booking booking = bookingService.findById(bookingId);
-        booking.setConfirm("no");
+        booking.setConfirm(false);
         bookingService.update(booking);
         return "redirect:/users/" + user.getId();
     }

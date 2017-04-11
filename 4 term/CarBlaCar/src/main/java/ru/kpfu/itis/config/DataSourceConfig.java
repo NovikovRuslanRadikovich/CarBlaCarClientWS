@@ -17,13 +17,6 @@ public class DataSourceConfig {
         dataSource.setUrl("jdbc:postgresql://localhost/carblacar");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
-//        DatabasePopulatorUtils.execute(databasePopulator(), dataSource);
         return dataSource;
     }
 }
-
-//    private DatabasePopulator databasePopulator() {
-//        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-//        populator.addScript(schemaScript);
-//        return populator;
-//    }

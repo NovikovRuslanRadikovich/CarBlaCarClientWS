@@ -2,6 +2,7 @@ package ru.kpfu.itis.service.impl;
 
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.itis.model.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.kpfu.itis.model.User;
@@ -24,6 +25,7 @@ public class TripsServiceImpl implements TripsService {
         return trip;
     }
 
+    @Transactional
     public void update(Trip trip) {
         tripsRepository.save(trip);
     }

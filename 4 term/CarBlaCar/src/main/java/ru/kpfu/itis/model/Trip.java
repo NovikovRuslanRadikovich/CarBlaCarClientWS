@@ -26,6 +26,7 @@ public class Trip {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "passengers_trips", joinColumns = @JoinColumn(name = "trip_id"), inverseJoinColumns =
     @JoinColumn(name = "passenger_id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
     List<Passenger> passengers;
     private String departure;
     private String destination;

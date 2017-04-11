@@ -1,6 +1,7 @@
 package ru.kpfu.itis.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.itis.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.kpfu.itis.repository.BookingsRepository;
@@ -18,7 +19,7 @@ public class BookingsServiceImpl implements BookingService {
         bookingsRepository.save(booking);
         return booking;
     }
-
+    @Transactional
     public void update(Booking booking) {
         bookingsRepository.save(booking);
     }

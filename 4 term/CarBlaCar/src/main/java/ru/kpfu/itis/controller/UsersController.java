@@ -93,7 +93,7 @@ public class UsersController {
     public String profile(ModelMap modelMap, @PathVariable Long userId, Principal principal) {
         User userInfo = (User) ((Authentication) principal).getPrincipal();
         modelMap.put("userinfo", userInfo);
-        if (userInfo.getDriver() != null && !userInfo.getDriver().getTrips().isEmpty()) {
+        if (userInfo.getDriver() != null && userInfo.getDriver().getTrips() != null) {
             List<Trip> tripList = userInfo.getDriver().getTrips();
             List<Trip> driverTrips = new ArrayList<>();
             List<Trip> endDriverTrips = new ArrayList<>();
@@ -139,7 +139,7 @@ public class UsersController {
             List<Booking> bookings = new ArrayList<>();
             for (Trip trip : driverTrips) {
                 for (Booking booking : trip.getBookings()) {
-                    if (booking.getConfirm() == null) {
+                    if (!booking.isConfirm()) {
                         bookings.add(booking);
                     }
                 }

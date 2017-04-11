@@ -8,7 +8,6 @@ public class HibernateConnectionFactory {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration().configure().buildSessionFactory();
 
         } catch (Throwable ex) {

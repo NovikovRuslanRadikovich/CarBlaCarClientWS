@@ -17,7 +17,7 @@ public class Booking {
     private Passenger passenger;
     private int count;
     private String info;
-    private String confirm;
+    private boolean confirm;
 
     public Booking() {
     }
@@ -62,11 +62,11 @@ public class Booking {
         this.info = info;
     }
 
-    public String getConfirm() {
+    public boolean isConfirm() {
         return confirm;
     }
 
-    public void setConfirm(String confirm) {
+    public void setConfirm(boolean confirm) {
         this.confirm = confirm;
     }
 }
