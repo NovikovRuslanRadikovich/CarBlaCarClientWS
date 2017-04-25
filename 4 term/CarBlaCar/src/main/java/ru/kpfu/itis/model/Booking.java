@@ -1,9 +1,13 @@
 package ru.kpfu.itis.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "bookings")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_sequence")
@@ -11,6 +15,7 @@ public class Booking {
     private Long id;
     @ManyToOne(targetEntity = Trip.class)
     @JoinColumn(name = "trip_id", referencedColumnName = "id")
+    @XmlTransient
     private Trip trip;
     @ManyToOne(targetEntity = Passenger.class)
     @JoinColumn(name = "passenger_id", referencedColumnName = "id")

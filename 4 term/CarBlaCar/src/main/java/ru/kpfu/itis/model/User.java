@@ -4,10 +4,14 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_secuence")
@@ -22,10 +26,13 @@ public class User {
     private String email;
     private UserRole role;
     @OneToOne(mappedBy = "user")
+    @XmlTransient
     private Driver driver;
     @OneToOne(mappedBy = "user")
+    @XmlTransient
     private Passenger passenger;
     @OneToMany(mappedBy = "user")
+    @XmlTransient
     List<Review> reviews;
 
     public User() {

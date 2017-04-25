@@ -4,11 +4,15 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 
 @Entity
 @Table(name = "drivers")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "driver_id_generator")
@@ -20,9 +24,11 @@ public class Driver {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @OneToMany(targetEntity = Automobile.class, mappedBy = "driver", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @XmlTransient
     private List<Automobile> automobileList;
     @OneToMany(mappedBy = "driver")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @XmlTransient
     private List<Trip> trips;
 
     public Driver() {
@@ -33,7 +39,7 @@ public class Driver {
         this.experience = experience;
         this.rating = rating;
         this.user = user;
-        this.automobileList = automobileList;
+//        this.automobileList = automobileList;
     }
 
     public Long getId() {

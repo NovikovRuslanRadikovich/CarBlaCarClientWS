@@ -1,26 +1,32 @@
 package ru.kpfu.itis.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 
 @Entity
 @Table(name = "autos")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Automobile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auto_id_generator")
     @SequenceGenerator(name = "auto_id_generator", sequenceName = "autos_id_seq", allocationSize = 1)
-    Long id;
-    String brand;
-    String model;
+    private Long id;
+    private String brand;
+    private String model;
     @Column(name = "license_plate")
-    String licensePlate; //госномер
-    int age;
+    private String licensePlate; //госномер
+    private int age;
     @ManyToOne(targetEntity = Driver.class)
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
-    Driver driver;
+    @XmlTransient
+    private Driver driver;
     @OneToMany(mappedBy = "auto")
-    List<Trip> trips;
+    @XmlTransient
+    private List<Trip> trips;
 
     public Automobile() {
     }

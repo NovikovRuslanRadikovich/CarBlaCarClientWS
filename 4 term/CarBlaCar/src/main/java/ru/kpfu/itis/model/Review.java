@@ -1,10 +1,13 @@
 package ru.kpfu.itis.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 
 @Entity
 @Table(name = "reviews")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_sequence")

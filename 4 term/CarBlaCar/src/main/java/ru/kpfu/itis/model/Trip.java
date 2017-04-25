@@ -6,12 +6,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.kpfu.itis.forms.TripForm;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
 
 @Entity
 @Table(name = "trips")
+@XmlRootElement
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trips_id_sequence")
@@ -27,7 +30,9 @@ public class Trip {
     @JoinTable(name = "passengers_trips", joinColumns = @JoinColumn(name = "trip_id"), inverseJoinColumns =
     @JoinColumn(name = "passenger_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    List<Passenger> passengers;
+    @XmlElementWrapper(name = "passengers")
+    @XmlElement(name = "passenger")
+    private List<Passenger> passengers;
     private String departure;
     private String destination;
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,15 +43,12 @@ public class Trip {
     private String info; //информация и доп. условия
     @OneToMany(mappedBy = "trip")
     @LazyCollection(LazyCollectionOption.FALSE)
-    List<Booking> bookings;
+    private List<Booking> bookings;
     @OneToMany(mappedBy = "trip")
-    List<Review> reviews;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Review> reviews;
 
     public Trip() {
-    }
-
-    public Trip(TripForm tripForm){
-//        this.auto = tripForm.getAuto();
     }
 
     public Trip(Driver driver, Automobile auto, String departure, String destination, Date date, int price, int count, String status, String info) {

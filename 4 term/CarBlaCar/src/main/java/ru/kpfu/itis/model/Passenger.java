@@ -4,11 +4,15 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 
 @Entity
 @Table(name = "passengers")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passengers_id_sequence")
@@ -20,8 +24,10 @@ public class Passenger {
     private User user;
     @ManyToMany(mappedBy = "passengers")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @XmlTransient
     private List<Trip> trips;
     @OneToMany(mappedBy = "passenger")
+    @XmlTransient
     private List<Booking> bookings;
 
     public Passenger() {

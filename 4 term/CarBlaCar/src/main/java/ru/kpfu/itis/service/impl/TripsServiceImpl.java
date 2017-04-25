@@ -6,19 +6,22 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.itis.model.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.kpfu.itis.model.User;
-import ru.kpfu.itis.model.UserRole;
 import ru.kpfu.itis.model.specs.TripSpecs;
 import ru.kpfu.itis.repository.TripsRepository;
 import ru.kpfu.itis.service.TripsService;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import java.util.Date;
 import java.util.List;
 
+@WebService(endpointInterface = "ru.kpfu.itis.service.TripsService",
+        serviceName = "TripService")
 @Service
 public class TripsServiceImpl implements TripsService {
 
     @Autowired
-    TripsRepository tripsRepository;
+    private TripsRepository tripsRepository;
 
     public Trip addTrip(Trip trip) {
         tripsRepository.save(trip);
@@ -42,6 +45,7 @@ public class TripsServiceImpl implements TripsService {
         return tripsRepository.findByStatusOrderByDateDesc("Ожидание");
     }
 
+    @WebMethod(operationName = "searchTrip")
     public List<Trip> findBySearch(String departure, String destination) {
         return tripsRepository.findByDepartureAndDestinationOrderByDateDesc(departure, destination);
     }

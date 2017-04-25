@@ -1,16 +1,19 @@
 package ru.kpfu.itis.service;
 
+import org.springframework.stereotype.Service;
 import ru.kpfu.itis.model.Trip;
 import ru.kpfu.itis.model.User;
-import ru.kpfu.itis.model.UserRole;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
 import java.util.List;
 
+@WebService
 public interface TripsService {
 
-    Trip addTrip(Trip trip);
+    Trip addTrip(@WebParam Trip trip);
 
-    void update(Trip trip);
+    void update(@WebParam Trip trip);
 
     List<Trip> findAll();
 
@@ -18,13 +21,13 @@ public interface TripsService {
 
     List<Trip> findByStatusOrderDate();
 
-    List<Trip> findBySearch(String departure, String destination);
+    List<Trip> findBySearch(@WebParam String departure, @WebParam String destination);
 
-    Trip findById(Long id);
+    Trip findById(@WebParam Long id);
 
     List<Trip> lastTrips();
 
-    List<Trip> lastEndsTripsForMonth(User user);
+    List<Trip> lastEndsTripsForMonth(@WebParam User user);
 
 
 }
