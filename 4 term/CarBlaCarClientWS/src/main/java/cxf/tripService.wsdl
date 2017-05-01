@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.service.itis.kpfu.ru/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://service.itis.kpfu.ru/" name="TripService" targetNamespace="http://impl.service.itis.kpfu.ru/">
+  <wsdl:import location="http://localhost:8081/services/tripService?wsdl=TripsService.wsdl" namespace="http://service.itis.kpfu.ru/">
+    </wsdl:import>
+  <wsdl:binding name="TripServiceSoapBinding" type="ns1:TripsService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findBySearch">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findBySearch">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findBySearchResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lastEndsTripsForMonth">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="lastEndsTripsForMonth">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="lastEndsTripsForMonthResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findByStatusOrderDate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findByStatusOrderDate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findByStatusOrderDateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAllOrderDate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findAllOrderDate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findAllOrderDateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="update">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="update">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findAll">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findAll">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findAllResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addTrip">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addTrip">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addTripResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lastTrips">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="lastTrips">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="lastTripsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TripService">
+    <wsdl:port binding="tns:TripServiceSoapBinding" name="TripsServiceImplPort">
+      <soap:address location="http://localhost:8081/services/tripService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
