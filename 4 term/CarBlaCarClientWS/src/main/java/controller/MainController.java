@@ -6,13 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.CbcTrip;
+import service.SoapTrip;
 
 @Controller
 public class MainController {
 
     @Autowired
-    private CbcTrip tripService;
+    private SoapTrip tripService;
 
     @RequestMapping(value = "/allTrips")
     public String renderAllTrips(ModelMap modelMap) {

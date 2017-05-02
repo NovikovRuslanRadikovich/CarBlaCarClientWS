@@ -4,7 +4,7 @@ import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 
 import java.util.List;
 
-public class TestWs {
+public class TestSOAPWs {
 
     public static void main(String[] args) {
         String soapServiceUrl = "http://localhost:8081/services/tripService";
