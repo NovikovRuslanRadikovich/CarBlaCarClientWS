@@ -13,7 +13,7 @@ public class RestTrip {
     @Autowired
     RestTemplate restTemplate;
 
-    public static final String API_URL = "http://localhost:8080/api/v1_0/trip/1";
+    public static final String API_URL = "http://localhost:8080/api/v1_0/trip/";
 
     public CbcTripInfo getTripInfoById(long goodId) {
         try {
