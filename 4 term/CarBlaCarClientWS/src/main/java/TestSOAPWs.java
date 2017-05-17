@@ -15,7 +15,7 @@ public class TestSOAPWs {
 
         TripsService tripService = (TripsService) factoryBean.create();
 
-        List<Trip> result = tripService.zz();
+        List<Trip> result = tripService.findAll();
         for (Trip trip : result) {
             System.out.println("trip id = " + trip.getId());
         }

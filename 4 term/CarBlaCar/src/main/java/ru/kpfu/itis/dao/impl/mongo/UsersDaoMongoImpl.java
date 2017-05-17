@@ -5,7 +5,6 @@ import com.mongodb.DBObject;
 import ru.kpfu.itis.dao.UsersDao;
 import ru.kpfu.itis.dao.factory.MongoConnectionFactory;
 import ru.kpfu.itis.model.User;
-import ru.kpfu.itis.model.UserRole;
 
 import java.util.List;
 

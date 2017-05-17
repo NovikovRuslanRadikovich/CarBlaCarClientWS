@@ -16,8 +16,9 @@ public class ApplicationMain {
 
         //Получение списка коллекций
         Set<String> colls = db.getCollectionNames();
+        System.out.println("Получаем  имена коллекций");
         for (String s : colls) {
-            System.out.println(s);
+            System.out.println("Коллекция " + s);
         }
 
         //Получение коллекции
@@ -32,28 +33,35 @@ public class ApplicationMain {
         info.put("x", 202);
         info.put("y", 422);
         doc.put("info", info);
+        System.out.println("----------Сохранение объекта--------");
         coll.insert(doc);
 
         //Поиск первого элемента коллекции
         DBObject myDoc = coll.findOne();
+        System.out.println("----------Получение объекта--------");
         System.out.println(myDoc);
 
         //Добавление нескольких объектов
         for (int i=0; i<100; i++){
-            coll.insert(new BasicDBObject().append("i",i));
+            coll.insert(new BasicDBObject().
+                    append("_id", i)
+                    .append("i",i));
         }
 
         //Подсчет объектов в коллекции
+        System.out.println("----------Количество объектов в коллекции--------");
         System.out.println(coll.getCount());
 
         //Использование курсора для доступа ко всем элементам
         DBCursor cursor = coll.find();
+        System.out.println("--------Достаем все объекты----------");
         while (cursor.hasNext()){
             System.out.println(cursor.next());
         }
 
         //Получение одного объекта используя объект-запрос
         BasicDBObject query = new BasicDBObject();
+        System.out.println("--------где i равно 79----------");
         query.put("i", 79);
         cursor = coll.find(query);
         while (cursor.hasNext()){
@@ -61,6 +69,7 @@ public class ApplicationMain {
         }
 
         //примеры с использованием оператора $
+        System.out.println("---------j не равно 3, k больше и равно 10");
         query = new BasicDBObject();
         query.put("j", new BasicDBObject("$ne",3));
         query.put("k", new BasicDBObject("$gt", 10));
@@ -71,8 +80,9 @@ public class ApplicationMain {
 
         //Получение множества объектов используя запросы
         query = new BasicDBObject();
-        query.put("i", new BasicDBObject("$gt",50).append("$ne", 3));
+        query.put("i", new BasicDBObject("$lt",10).append("$ne", 3));
         cursor = coll.find(query);
+        System.out.println("------Меньше 10 и не равно 3");
         while (cursor.hasNext()){
             System.out.println(cursor.next());
         }
@@ -80,11 +90,12 @@ public class ApplicationMain {
         //Удаление объекта
         coll.remove(new BasicDBObject("i",new BasicDBObject("$exists",true)));
 
-        System.out.println("просмотр коллекции");
+        System.out.println("----просмотр коллекции------");
         DBCursor objects = coll.find();
         while (objects.hasNext()){
             System.out.println(objects.next());
         }
+        System.out.println("-------удаление коллекции------");
         coll.drop();
     }
 
